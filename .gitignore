@@ -1,7 +1,6 @@
-backend/__pycache__/
 backend/.env
 backend/alembic/versions/*.pyc
-
+__pycache__/
 frontend/node_modules/
 frontend/dist/
 frontend/.env.local
