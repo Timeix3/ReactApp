@@ -1,24 +1,23 @@
 from typing import Optional
 
-from pydantic import ConfigDict
-
-from sqlmodel import Field, SQLModel
+from app.schemas.base_scheme import BaseScheme
 
 
-class TaskBase(SQLModel):
+class TaskBase(BaseScheme):
     title: str
     desc: Optional[str] = None
+    project_id: int
 
 
 class TaskCreate(TaskBase):
     pass
 
 
-class TaskUpdate(SQLModel):
+class TaskUpdate(BaseScheme):
     title: Optional[str] = None
     desc: Optional[str] = None
+    project_id: Optional[int] = None
 
 
 class TaskRead(TaskBase):
     id: int
-    model_config = ConfigDict(from_attributes=True)

@@ -1,5 +1,6 @@
 from typing import List, Optional
 from sqlmodel import Session, select
+from datetime import datetime
 
 from app.core.database import get_session
 from app.models.task import Task
@@ -27,8 +28,8 @@ def update_task(session: Session, task_id: int, task_data: TaskUpdate) -> Option
         return None
     update_data = task_data.model_dump(exclude_unset=True)
     for key, value in update_data.items():
-        setattr(db_task, key, value)   
-    session.add(db_task)
+        setattr(db_task, key, value)
+    db_task.updated_at = datetime.now()
     session.commit()
     session.refresh(db_task)
     return db_task

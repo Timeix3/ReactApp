@@ -14,7 +14,7 @@ from app.schemas.task import TaskCreate, TaskRead, TaskUpdate
 
 api_router = APIRouter()
 
-@api_router.get("/", response_model=List[TaskRead])
+@api_router.get("", response_model=List[TaskRead])
 def read_tasks(session: Session = Depends(get_session)):
     return get_tasks(session)
 
@@ -27,7 +27,7 @@ def read_task(task_id: int, session: Session = Depends(get_session)):
     return task
 
 
-@api_router.post("/", response_model=TaskRead, status_code=201)
+@api_router.post("", response_model=TaskRead, status_code=201)
 def create_new_task(task_in: TaskCreate, session: Session = Depends(get_session)):
     return create_task(session, task_in)
 
