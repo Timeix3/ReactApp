@@ -1,6 +1,5 @@
-import { useAppDispatch, useAppSelector, type RootState } from '../../app/store';
-import { setPage } from '../../store/uiSlice';
 import type { PageType } from '../../types';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const tabs: { id: PageType; label: string }[] = [
   { id: 'tasks', label: '📝 Задачи' },
@@ -8,8 +7,14 @@ const tabs: { id: PageType; label: string }[] = [
 ];
 
 export function NavPill() {
-  const dispatch = useAppDispatch();
-  const current = useAppSelector((s: RootState) => s.ui.currentPage);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const current = tabs.find((tab) => location.pathname === `/${tab.id}`)?.id ?? 'tasks';
+
+  const handlePageChange = (page: PageType) => {
+    if (page === current) return;
+    navigate(`/${page}`);
+  };
 
   return (
     <div className="flex justify-center mb-6">
@@ -19,7 +24,7 @@ export function NavPill() {
             key={tab.id}
             data-page={tab.id}
             className={`px-3 py-1 rounded-full ${current === tab.id ? 'active-page' : ''}`}
-            onClick={() => dispatch(setPage(tab.id))}
+            onClick={() => handlePageChange(tab.id)}
           >
             {tab.label}
           </button>

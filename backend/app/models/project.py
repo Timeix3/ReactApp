@@ -8,5 +8,6 @@ class Project(SQLModel, table=True):
     title: str
     desc: Optional[str] = None
     is_default: bool
+    user_id: int
     created_at: datetime = Field(default_factory=datetime.today)
     updated_at: Optional[datetime] = None

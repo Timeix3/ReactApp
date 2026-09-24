@@ -1,17 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from'@reduxjs/toolkit';
 
-import type { ModalType, PageType } from '../types';
+import type { ModalType } from '../types';
 
 interface UiState {
-  currentPage: PageType;
   openModal: ModalType;
   editingTaskId: number | null;
   editingProjectId: number | null;
 }
 
 const initialState: UiState = {
-  currentPage: 'tasks',
   openModal: null,
   editingTaskId: null,
   editingProjectId: null,
@@ -21,9 +19,6 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    setPage(state, action: PayloadAction<PageType>) {
-      state.currentPage = action.payload;
-    },
     openCreateTaskModal(state) {
       state.openModal = 'createTask';
       state.editingTaskId = null;
@@ -43,6 +38,16 @@ const uiSlice = createSlice({
       state.openModal = 'editProjectTask';
       state.editingTaskId = action.payload;
     },
+    openLoginModal(state) {
+      state.openModal = 'login';
+      state.editingTaskId = null;
+      state.editingProjectId = null;
+    },
+    openRegisterModal(state) {
+      state.openModal = 'register';
+      state.editingTaskId = null;
+      state.editingProjectId = null;
+    },
     closeModal(state) {
       state.openModal = null;
       state.editingTaskId = null;
@@ -52,12 +57,13 @@ const uiSlice = createSlice({
 });
 
 export const {
-  setPage,
   openCreateTaskModal,
   openCreateProjectModal,
   openEditProjectModal,
   openEditProjectTaskModal,
   openCreateProjectTaskModal,
+  openLoginModal,
+  openRegisterModal,
   closeModal,
 } = uiSlice.actions;
 

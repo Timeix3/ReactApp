@@ -2,7 +2,6 @@ from typing import Optional
 
 from app.schemas.base_scheme import BaseScheme
 
-
 class TaskBase(BaseScheme):
     title: str
     desc: Optional[str] = None

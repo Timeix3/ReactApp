@@ -8,5 +8,6 @@ class Task(SQLModel, table=True):
     title: str
     desc: Optional[str] = None
     project_id: int
+    user_id: int
     created_at: datetime = Field(default_factory=datetime.today)
     updated_at: Optional[datetime] = None

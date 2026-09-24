@@ -12,12 +12,19 @@ export interface Project {
   isDefault: boolean;
 }
 
+export interface User {
+  id: number;
+  username: string;
+}
+
 export type ModalType =
   | 'createTask'
   | 'createProject'
   | 'createProjectTask'
   | 'editProject'
   | 'editProjectTask'
+  | 'login'
+  | 'register'
   | null;
 
-export type PageType = 'tasks' | 'projects';
+export type PageType = 'login' | 'tasks' | 'projects';

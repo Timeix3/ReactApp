@@ -8,7 +8,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from app.models import project, task
+from app.models import project, task, user
 from app.core.config import settings
 
 # this is the Alembic Config object, which provides

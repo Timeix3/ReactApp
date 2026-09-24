@@ -39,8 +39,6 @@ services:
     restart: always
     ports:
       - "8080:8080" 
-    volumes:
-      - /app/node_modules
     environment:
       - VITE_API_URL=http://localhost:8000
 

@@ -5,6 +5,8 @@ import { CreateProjectModal } from '../features/projects/CreateProjectModal';
 import { EditProjectModal } from '../features/projects/EditProjectModal';
 import { EditProjectTaskModal } from '../features/projects/EditProjectTaskModal';
 import { CreateProjectTaskModal } from '../features/projects/CreateProjectTaskModal';
+import { LoginModal } from '../features/auth/LoginModal';
+import { RegisterModal } from '../features/auth/RegisterModal';
 
 export function ModalRouter() {
   const openModal = useAppSelector((s: RootState) => s.ui.openModal);
@@ -12,11 +14,13 @@ export function ModalRouter() {
   if (!openModal) return null;
 
   switch (openModal) {
-    case 'createTask':      return <CreateTaskModal />;
-    case 'createProject':   return <CreateProjectModal />;
+    case 'createTask': return <CreateTaskModal />;
+    case 'createProject': return <CreateProjectModal />;
     case 'createProjectTask': return <CreateProjectTaskModal />;
-    case 'editProject':     return <EditProjectModal />;
+    case 'editProject': return <EditProjectModal />;
     case 'editProjectTask': return <EditProjectTaskModal />;
-    default:                return null;
+    case 'login': return <LoginModal />;
+    case 'register': return <RegisterModal />;
+    default: return null;
   }
 }

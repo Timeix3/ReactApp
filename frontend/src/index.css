@@ -160,6 +160,7 @@ body {
 
 /* ── Form controls ── */
 input[type='text'],
+input[type='password'],
 textarea,
 input[type='date'],
 select {
@@ -176,6 +177,7 @@ select {
 }
 
 input[type='text']:focus,
+input[type='password']:focus,
 textarea:focus,
 input[type='date']:focus,
 select:focus {
