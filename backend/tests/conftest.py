@@ -1,12 +1,12 @@
 from collections.abc import Generator
 
 import pytest
-from fastapi.testclient import TestClient
 from sqlalchemy.pool import StaticPool
+from starlette.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine
 
-from app.core.database import get_session
 from app.core.auth import get_current_user
+from app.core.database import get_session
 from app.main import app
 from app.models.user import User
 
