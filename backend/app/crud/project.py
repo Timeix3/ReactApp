@@ -23,7 +23,7 @@ def get_project(session: Session, project_id: int, user_id: int) -> Optional[Pro
 
 def get_default_project(session: Session, user_id: int) -> Optional[Project]:
     default_project = session.exec(
-        select(Project).where(Project.is_default == True, Project.user_id == user_id)
+        select(Project).where(Project.is_default, Project.user_id == user_id)
     ).first()
     if not default_project:
         return None

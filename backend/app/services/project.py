@@ -1,6 +1,6 @@
 from sqlmodel import Session
 
-from app.crud.project import get_default_project, create_project
+from app.crud.project import get_default_project
 from app.models.project import Project
 
 
