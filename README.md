@@ -124,11 +124,10 @@ ReactApp/
 2. В корне проекта создайте файл `backend/.env`:
 
 ```env
-DATABASE_URL=postgresql://postgres:postgres_password@db:5432/app_db
+DATABASE_URL=postgresql+psycopg2://postgres:postgres_password@db:5432/app_db
 SECRET_KEY=super-secret-key-change-me
 ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=60
-CORS_ORIGINS=["http://localhost:8080"]
+ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
 3. Запустите проект:
@@ -142,7 +141,6 @@ docker compose up --build -d
 - Frontend: http://localhost:8080
 - Backend API: http://localhost:8000
 - Swagger UI: http://localhost:8000/docs
-- PostgreSQL: localhost:5432
 
 ## CI/CD
 
