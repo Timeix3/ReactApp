@@ -1,79 +1,124 @@
-# React + TypeScript + Vite
+# React Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Фронтенд часть приложения ReactApp — это интерфейс для управления задачами и проектами. Основная цель — обеспечить удобную работу с личными списками задач, модальными окнами и JWT-аутентификацией без лишних перезагрузок страницы.
 
-## Tests
+## Что реализовано
 
-Run the test suite once with `npm test`, or start Vitest in watch mode with `npm run test:watch`.
+- Страница входа и регистрации
+- Защищённый маршрут для авторизованных пользователей
+- Страница задач и проектов
+- Модальные окна создания/редактирования сущностей
+- Динамическое обновление данных через RTK Query
+- Вся логика доступа и данных разделена по feature-модулям
+- В приложении активно используются кастомные hooks для работы с данными и действиями
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- TypeScript
+- Vite
+- Redux Toolkit
+- RTK Query
+- React Router DOM
+- Tailwind CSS
+- Vitest
+- Testing Library
+- ESLint
 
-## React Compiler
+## Структура frontend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+frontend/
+├── src/
+│   ├── app/
+│   │   ├── App.tsx
+│   │   ├── ModalRouter.tsx
+│   │   └── store.ts
+│   ├── features/
+│   │   ├── auth/
+│   │   ├── projects/
+│   │   └── tasks/
+│   ├── pages/
+│   │   ├── LoginPage.tsx
+│   │   ├── NavPage.tsx
+│   │   ├── ProjectsPage.tsx
+│   │   └── TasksPage.tsx
+│   ├── shared/
+│   │   ├── lib/
+│   │   └── ui/
+│   ├── store/
+│   │   ├── apiHeaders.ts
+│   │   ├── authApi.ts
+│   │   ├── authSlice.ts
+│   │   ├── projectsApi.ts
+│   │   ├── rootApi.ts
+│   │   ├── tasksApi.ts
+│   │   └── uiSlice.ts
+│   ├── types/
+│   │   └── index.ts
+│   ├── index.css
+│   └── main.tsx
+├── package.json
+├── Dockerfile
+├── vite.config.ts
+├── tsconfig.json
+├── eslint.config.js
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Основные сущности UI
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Auth
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `LoginModal` — вход пользователя
+- `RegisterModal` — регистрация пользователя
+- `useAuthActions` — логика входа/регистрации
+- `authSlice` — хранение JWT-токена и текущего пользователя
 
+### Projects
+
+- `ProjectList` — список проектов
+- `ProjectCard` — один проект с количеством задач
+- `CreateProjectModal` — создание нового проекта
+- `EditProjectModal` — редактирование и удаление проекта
+- `CreateProjectTaskModal` — создание задачи прямо из проекта
+- `ProjectPreview` — краткая информация о проекте при создании задачи
+
+### Tasks
+
+- `TaskList` — список задач
+- `TaskCard` — карточка задачи
+- `CreateTaskModal` — создание новой задачи
+- `EditProjectTaskModal` — редактирование задачи
+
+## Состояние и данные
+
+Фронтенд использует Redux Toolkit и RTK Query:
+
+- `authApi` — запросы к `/api/auth`
+- `projectsApi` — запросы к `/api/projects`
+- `tasksApi` — запросы к `/api/tasks`
+- `rootApi` — общий API-сервис с базовым URL и заголовками
+- `uiSlice` — состояние открытых модальных окон и текущих редактируемых сущностей
+- `authSlice` — данные аутентификации
+
+## Авторизация
+
+После успешного логина frontend сохраняет `access_token` в `localStorage` и добавляет его в заголовки запросов через `prepareAuthHeaders`.
+
+Для защищённых путей используется `NavPage`, который проверяет наличие пользователя и редиректит на `/login`, если токен отсутствует или запрос невалиден.
+
+## Запуск
+
+```bash
+docker compose up frontend --build -d
+```
+
+## Тестирование
+
+Проект настроен на Vitest и Testing Library. Команды:
+
+```bash
+npm test
+npm run test:watch
 ```
